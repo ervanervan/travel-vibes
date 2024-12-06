@@ -8,6 +8,7 @@ import Articlepage from "./pages/Articlepage";
 import App from "./App";
 import Categorypage from "./pages/Categorypage";
 import Commentpage from "./pages/Commentpage";
+import DashboardHome from "./pages/Dashboardhome";
 
 export const router = createBrowserRouter([
   {
@@ -19,9 +20,15 @@ export const router = createBrowserRouter([
       { path: "/login", element: <Loginpage /> },
     ],
   },
-  { path: "/comments", element: <Commentpage /> },
-  { path: "/categories", element: <Categorypage /> },
-  { path: "/articles", element: <Articlepage /> },
   { path: "/profile", element: <Profilepage /> },
-  { path: "/dashboard", element: <Dashboardpage /> },
+  {
+    path: "/dashboard",
+    element: <Dashboardpage />,
+    children: [
+      { index: true, element: <DashboardHome /> },
+      { path: "articles", element: <Articlepage /> },
+      { path: "categories", element: <Categorypage /> },
+      { path: "comments", element: <Commentpage /> },
+    ],
+  },
 ]);

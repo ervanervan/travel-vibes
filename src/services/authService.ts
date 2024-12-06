@@ -1,19 +1,18 @@
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export const registerUser = async (
   email: string,
   username: string,
   password: string
 ) => {
   try {
-    const response = await axios.post(
-      "https://extra-brooke-yeremiadio-46b2183e.koyeb.app/api/auth/local/register",
-      {
-        email,
-        username,
-        password,
-      }
-    );
+    const response = await axios.post(`${API_BASE_URL}/auth/local/register`, {
+      email,
+      username,
+      password,
+    });
     return response.data; // Mengembalikan data dari API
   } catch (error) {
     throw error; // Lemparkan error untuk ditangani di komponen
@@ -22,26 +21,20 @@ export const registerUser = async (
 
 export const getUserData = async (token: string) => {
   try {
-    const response = await axios.get(
-      "https://extra-brooke-yeremiadio-46b2183e.koyeb.app/api/users/me",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${API_BASE_URL}/users/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data; // Mengembalikan data pengguna
   } catch (error) {
     throw error; // Menangani error
   }
 };
 
-const API_URL =
-  "https://extra-brooke-yeremiadio-46b2183e.koyeb.app/api/auth/local";
-
 export const loginUser = async (identifier: string, password: string) => {
   try {
-    const response = await axios.post(API_URL, {
+    const response = await axios.post(`${API_BASE_URL}/auth/local`, {
       identifier,
       password,
     });

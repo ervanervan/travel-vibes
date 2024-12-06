@@ -1,8 +1,39 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, Outlet, useLocation } from "react-router-dom";
+import {
+  NavArrowLeft,
+  NavArrowRight,
+  LogOut,
+  Message,
+  Folder,
+  Book,
+} from "iconoir-react";
 
 const DashboardPage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    setUsername(user.username || "Guest");
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
+  const getTitle = () => {
+    const currentPath = location.pathname;
+
+    if (currentPath.includes("/dashboard/articles")) return "Articles";
+    if (currentPath.includes("/dashboard/categories")) return "Categories";
+    if (currentPath.includes("/dashboard/comments")) return "Comments";
+    return "Dashboard";
+  };
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -10,54 +41,80 @@ const DashboardPage = () => {
       <aside
         className={`${
           isSidebarOpen ? "w-64" : "w-16"
-        } bg-gray-950 text-white transition-all duration-300`}
+        } relative bg-gray-950 text-white transition-all duration-300`}
       >
-        <div className="p-4 flex items-center justify-between">
-          <h2
-            className={`text-xl font-semibold ${
-              isSidebarOpen ? "block" : "hidden"
-            }`}
-          >
-            Dashboard
-          </h2>
+        <div
+          className={`p-4 mt-4 flex items-center ${
+            isSidebarOpen ? "justify-between" : "justify-center"
+          }`}
+        >
+          <Link to="/dashboard">
+            <h2
+              className={`text-xl font-semibold ${
+                isSidebarOpen ? "block text-left" : "text-center hidden"
+              }`}
+            >
+              Dashboard
+            </h2>
+          </Link>
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="focus:outline-none"
+            className={`focus:outline-none ${
+              isSidebarOpen ? "" : "absolute right-5 mt-4"
+            }`}
           >
-            {isSidebarOpen ? "←" : "→"}
+            {isSidebarOpen ? <NavArrowLeft /> : <NavArrowRight />}
           </button>
         </div>
+
         <nav className="mt-4 space-y-4 p-2">
           <Link
-            to="/articles"
-            className="flex items-center p-2.5 hover:bg-gray-700 rounded-lg"
+            to="/dashboard/articles"
+            className={`flex items-center ${
+              isSidebarOpen ? "" : "justify-center"
+            } p-2.5 hover:bg-gray-900 rounded-lg`}
           >
-            📝
+            <Book width={20} />
             {isSidebarOpen && <span className="ml-4">Articles</span>}
           </Link>
           <Link
-            to="/categories"
-            className="flex items-center p-2.5 hover:bg-gray-700 rounded-lg"
+            to="/dashboard/categories"
+            className={`flex items-center ${
+              isSidebarOpen ? "" : "justify-center"
+            } p-2.5 hover:bg-gray-900 rounded-lg`}
           >
-            📂
+            <Folder width={20} />
             {isSidebarOpen && <span className="ml-4">Categories</span>}
           </Link>
           <Link
-            to="/comments"
-            className="flex items-center p-2.5 hover:bg-gray-700 rounded-lg"
+            to="/dashboard/comments"
+            className={`flex items-center ${
+              isSidebarOpen ? "" : "justify-center"
+            } p-2.5 hover:bg-gray-900 rounded-lg`}
           >
-            💬
+            <Message width={20} />
             {isSidebarOpen && <span className="ml-4">Comments</span>}
           </Link>
         </nav>
+        <div className="absolute bottom-4 p-2 w-full">
+          <button
+            onClick={handleLogout}
+            className={`flex items-center ${
+              isSidebarOpen ? "justify-start" : "justify-center"
+            } w-full p-2.5 hover:bg-gray-900 rounded-lg`}
+          >
+            <LogOut width={20} />
+            {isSidebarOpen && <span className="ml-4">Logout</span>}
+          </button>
+        </div>
       </aside>
 
       {/* Main Content */}
       <main className="flex-1 p-6">
         <header className="bg-white shadow-md p-4 rounded-lg flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
+          <h1 className="text-2xl font-bold text-gray-800">{getTitle()}</h1>
           <div className="flex items-center space-x-4">
-            <span className="text-gray-600">Admin</span>
+            <span className="text-gray-600">{username}</span>
             <img
               src="https://via.placeholder.com/40"
               alt="Profile"
@@ -66,41 +123,9 @@ const DashboardPage = () => {
           </div>
         </header>
 
-        <section className="mt-6 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-lg font-semibold text-gray-800">Articles</h2>
-            <p className="mt-2 text-gray-600">Manage your articles here.</p>
-            <Link
-              to="/articles"
-              className="text-blue-600 hover:underline mt-4 block"
-            >
-              Go to Articles →
-            </Link>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-lg font-semibold text-gray-800">Categories</h2>
-            <p className="mt-2 text-gray-600">
-              Organize your articles into categories.
-            </p>
-            <Link
-              to="/categories"
-              className="text-blue-600 hover:underline mt-4 block"
-            >
-              Go to Categories →
-            </Link>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-lg font-semibold text-gray-800">Comments</h2>
-            <p className="mt-2 text-gray-600">Manage article comments here.</p>
-            <Link
-              to="/comments"
-              className="text-blue-600 hover:underline mt-4 block"
-            >
-              Go to Comments →
-            </Link>
-          </div>
+        {/* Render child content */}
+        <section className="mt-6">
+          <Outlet />
         </section>
       </main>
     </div>
