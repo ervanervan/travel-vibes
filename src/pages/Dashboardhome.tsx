@@ -9,7 +9,7 @@ const DashboardHome = () => {
         <p className="mt-2 text-gray-950/80">Manage your articles here.</p>
         <Link
           to="articles"
-          className="flex items-center gap-2 text-gray-950/60 hover:underline mt-4 block"
+          className="flex items-center gap-2 text-gray-950/60 hover:underline mt-4"
         >
           See Articles <ArrowRightCircle />
         </Link>
@@ -22,7 +22,7 @@ const DashboardHome = () => {
         </p>
         <Link
           to="categories"
-          className="flex items-center gap-2 text-gray-950/60 hover:underline mt-4 block"
+          className="flex items-center gap-2 text-gray-950/60 hover:underline mt-4"
         >
           See Categories <ArrowRightCircle />
         </Link>
@@ -33,7 +33,7 @@ const DashboardHome = () => {
         <p className="mt-2 text-gray-950/80">Manage article comments here.</p>
         <Link
           to="comments"
-          className="flex items-center gap-2 text-gray-950/60 hover:underline mt-4 block"
+          className="flex items-center gap-2 text-gray-950/60 hover:underline mt-4"
         >
           See Comments <ArrowRightCircle />
         </Link>
