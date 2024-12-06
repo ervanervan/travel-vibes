@@ -1,40 +1,41 @@
+import { ArrowRightCircle } from "iconoir-react";
 import { Link } from "react-router-dom";
 
 const DashboardHome = () => {
   return (
     <section className="mt-6 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-lg font-semibold text-gray-800">Articles</h2>
-        <p className="mt-2 text-gray-600">Manage your articles here.</p>
+        <h2 className="text-lg font-semibold text-gray-950">Articles</h2>
+        <p className="mt-2 text-gray-950/80">Manage your articles here.</p>
         <Link
           to="articles"
-          className="text-blue-600 hover:underline mt-4 block"
+          className="flex items-center gap-2 text-gray-950/60 hover:underline mt-4 block"
         >
-          Go to Articles →
+          See Articles <ArrowRightCircle />
         </Link>
       </div>
 
       <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-lg font-semibold text-gray-800">Categories</h2>
-        <p className="mt-2 text-gray-600">
+        <h2 className="text-lg font-semibold text-gray-950">Categories</h2>
+        <p className="mt-2 text-gray-950/80">
           Organize your articles into categories.
         </p>
         <Link
           to="categories"
-          className="text-blue-600 hover:underline mt-4 block"
+          className="flex items-center gap-2 text-gray-950/60 hover:underline mt-4 block"
         >
-          Go to Categories →
+          See Categories <ArrowRightCircle />
         </Link>
       </div>
 
       <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-lg font-semibold text-gray-800">Comments</h2>
-        <p className="mt-2 text-gray-600">Manage article comments here.</p>
+        <h2 className="text-lg font-semibold text-gray-950">Comments</h2>
+        <p className="mt-2 text-gray-950/80">Manage article comments here.</p>
         <Link
           to="comments"
-          className="text-blue-600 hover:underline mt-4 block"
+          className="flex items-center gap-2 text-gray-950/60 hover:underline mt-4 block"
         >
-          Go to Comments →
+          See Comments <ArrowRightCircle />
         </Link>
       </div>
     </section>

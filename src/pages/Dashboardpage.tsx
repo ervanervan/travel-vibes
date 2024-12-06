@@ -12,6 +12,8 @@ import {
 const DashboardPage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [username, setUsername] = useState("");
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -35,13 +37,25 @@ const DashboardPage = () => {
     return "Dashboard";
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest(".relative")) {
+        setIsPopupOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
       <aside
         className={`${
           isSidebarOpen ? "w-64" : "w-16"
-        } relative bg-gray-950 text-white transition-all duration-300 hidden md:block`}
+        } relative bg-gray-950 text-white/90 transition-all duration-300 hidden md:block`}
       >
         <div
           className={`p-4 mt-4 flex items-center ${
@@ -50,11 +64,11 @@ const DashboardPage = () => {
         >
           <Link to="/dashboard">
             <h2
-              className={`text-xl font-semibold ${
+              className={`text-2xl font-pacifico ${
                 isSidebarOpen ? "block text-left" : "text-center hidden"
               }`}
             >
-              Dashboard
+              Travel Vibes
             </h2>
           </Link>
           <button
@@ -112,17 +126,40 @@ const DashboardPage = () => {
       {/* Main Content */}
       <main
         className={`flex-1 ${isSidebarOpen ? "md:p-6" : "p-2 md:p-6"}
-            `}
+        `}
       >
         <header className="bg-white shadow-md p-4 rounded-lg flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-800">{getTitle()}</h1>
-          <div className="flex items-center space-x-4">
-            <span className="text-gray-600">{username}</span>
-            <img
-              src="https://via.placeholder.com/40"
-              alt="Profile"
-              className="w-10 h-10 rounded-full"
-            />
+          <h1 className="text-2xl font-semibold text-gray-950">{getTitle()}</h1>
+          <div className="relative">
+            {/* User Info */}
+            <div
+              className="flex items-center space-x-4 cursor-pointer"
+              onClick={() => setIsPopupOpen(!isPopupOpen)} // Toggle Popup
+            >
+              <span className="text-gray-600">{username}</span>
+              <img
+                src="https://via.placeholder.com/40"
+                alt="Profile"
+                className="w-10 h-10 rounded-full"
+              />
+            </div>
+
+            {/* Popup */}
+            {isPopupOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg border border-gray-200 z-10">
+                <div className="p-4">
+                  <p className="text-gray-800 font-medium">Hi, {username}</p>
+                </div>
+                <hr />
+                <button
+                  className="w-full flex items-center gap-2 px-4 py-2 text-left text-red-600 hover:bg-gray-100 rounded-b-lg"
+                  onClick={handleLogout}
+                >
+                  <LogOut />
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
         </header>
 
