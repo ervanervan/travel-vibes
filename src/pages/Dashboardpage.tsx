@@ -41,7 +41,7 @@ const DashboardPage = () => {
       <aside
         className={`${
           isSidebarOpen ? "w-64" : "w-16"
-        } relative bg-gray-950 text-white transition-all duration-300`}
+        } relative bg-gray-950 text-white transition-all duration-300 hidden md:block`}
       >
         <div
           className={`p-4 mt-4 flex items-center ${
@@ -110,7 +110,10 @@ const DashboardPage = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6">
+      <main
+        className={`flex-1 ${isSidebarOpen ? "md:p-6" : "p-2 md:p-6"}
+            `}
+      >
         <header className="bg-white shadow-md p-4 rounded-lg flex items-center justify-between">
           <h1 className="text-2xl font-bold text-gray-800">{getTitle()}</h1>
           <div className="flex items-center space-x-4">

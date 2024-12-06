@@ -1,21 +1,83 @@
-import api from "./api";
+import axios from "axios";
+import { Article, PaginationMeta } from "../types";
 
-export const getArticles = (params?: Record<string, any>) => {
-  return api.get("/articles", { params });
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+// Mendapatkan semua artikel dengan pagination
+export const getArticles = async (
+  page = 1,
+  pageSize = 25
+): Promise<{ articles: Article[]; meta: PaginationMeta }> => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/articles`, {
+      params: { page, pageSize },
+    });
+
+    return {
+      articles: response.data.data as Article[], // Tipe array artikel
+      meta: response.data.meta as PaginationMeta, // Tipe meta data
+    };
+  } catch (error) {
+    throw error;
+  }
 };
 
-export const getArticleById = (id: string) => {
-  return api.get(`/articles/${id}`);
+// Mendapatkan artikel berdasarkan ID
+export const getArticleById = async (id: number) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/articles/${id}`);
+    return response.data; // Mengembalikan data artikel
+  } catch (error) {
+    throw error;
+  }
 };
 
-export const createArticle = (data: any) => {
-  return api.post("/articles", { data });
+// Membuat artikel baru
+export const createArticle = async (token: string, articleData: object) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/articles`, articleData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data; // Data artikel yang baru dibuat
+  } catch (error) {
+    throw error;
+  }
 };
 
-export const updateArticle = (id: string, data: any) => {
-  return api.put(`/articles/${id}`, { data });
+// Memperbarui artikel
+export const updateArticle = async (
+  token: string,
+  id: number,
+  articleData: object
+) => {
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/articles/${id}`,
+      articleData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data; // Artikel yang diperbarui
+  } catch (error) {
+    throw error;
+  }
 };
 
-export const deleteArticle = (id: string) => {
-  return api.delete(`/articles/${id}`);
+// Menghapus artikel
+export const deleteArticle = async (token: string, id: number) => {
+  try {
+    const response = await axios.delete(`${API_BASE_URL}/articles/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data; // Konfirmasi penghapusan
+  } catch (error) {
+    throw error;
+  }
 };

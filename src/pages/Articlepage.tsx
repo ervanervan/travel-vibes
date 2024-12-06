@@ -1,41 +1,65 @@
-// import { useEffect, useState } from "react";
-// import { getArticles } from "../services/articlesApi";
+import { useEffect, useState } from "react";
+import { getArticles } from "../services/articlesApi";
+import { Article, PaginationMeta } from "../types";
 
 const Articlepage = () => {
-  return <div>Article page</div>;
-  // const [articles, setArticles] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await getArticles({
-  //         "pagination[page]": 1,
-  //         "pagination[pageSize]": 10,
-  //         populate: "*",
-  //       });
-  //       setArticles(response.data.data); // Sesuaikan dengan struktur API.
-  //     } catch (error) {
-  //       console.error("Error fetching articles:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-  // if (loading) return <p>Loading articles...</p>;
-  // return (
-  //   <div>
-  //     <h1>Articles</h1>
-  //     <ul>
-  //       {articles.map((article: any) => (
-  //         <li key={article.id}>
-  //           <h2>{article.attributes.title}</h2>
-  //           <p>{article.attributes.description}</p>
-  //         </li>
-  //       ))}
-  //     </ul>
-  //   </div>
-  // );
+  const [articles, setArticles] = useState<Article[]>([]); // Tipe array artikel
+  const [meta, setMeta] = useState<PaginationMeta | null>(null); // Tipe meta bisa null awalnya
+  const [error, setError] = useState<string>(""); // Tipe string untuk error
+  const [page, setPage] = useState<number>(1); // Tipe number untuk pagination
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const { articles, meta } = await getArticles(page);
+        setArticles(articles);
+        setMeta(meta);
+      } catch (err) {
+        setError("Failed to fetch articles.");
+      }
+    };
+
+    fetchArticles();
+  }, [page]);
+
+  if (error) return <p>{error}</p>;
+
+  return (
+    <div>
+      <h1>Articles</h1>
+      <ul>
+        {articles.map((article) => (
+          <li key={article.id}>
+            <h3>{article.title || "Untitled"}</h3>
+            <p>{article.description || "No description"}</p>
+            <img
+              src={article.cover_image_url}
+              alt={article.title || "Cover"}
+              width={100}
+            />
+          </li>
+        ))}
+      </ul>
+      <div>
+        <button
+          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          disabled={page === 1}
+        >
+          Previous
+        </button>
+        <button
+          onClick={() =>
+            setPage((prev) =>
+              meta?.pageCount && prev < meta.pageCount ? prev + 1 : prev
+            )
+          }
+          disabled={page === meta?.pageCount}
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default Articlepage;
