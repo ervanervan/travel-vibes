@@ -6,6 +6,8 @@ import Loginpage from "./pages/Loginpage";
 import Profilepage from "./pages/Profilepage";
 import Articlepage from "./pages/Articlepage";
 import App from "./App";
+import Categorypage from "./pages/Categorypage";
+import Commentpage from "./pages/Commentpage";
 
 export const router = createBrowserRouter([
   {
@@ -13,11 +15,13 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/", element: <Homepage /> },
-      { path: "/dashboard", element: <Dashboardpage /> },
       { path: "/register", element: <Registerpage /> },
       { path: "/login", element: <Loginpage /> },
-      { path: "/profile", element: <Profilepage /> },
-      { path: "/article", element: <Articlepage /> },
     ],
   },
+  { path: "/comments", element: <Commentpage /> },
+  { path: "/categories", element: <Categorypage /> },
+  { path: "/articles", element: <Articlepage /> },
+  { path: "/profile", element: <Profilepage /> },
+  { path: "/dashboard", element: <Dashboardpage /> },
 ]);
