@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getUserData, registerUser } from "../services/authService";
+import { Link } from "react-router-dom";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -34,9 +35,8 @@ const RegisterPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
-        <h1 className="text-2xl font-semibold text-gray-800 text-center mb-6">
-          Register
-        </h1>
+        <h1 className="text-2xl font-medium mb-2 text-center">Travel Vibes</h1>
+        <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
         <form onSubmit={handleRegister} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -47,7 +47,7 @@ const RegisterPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
+              className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-nonefocus:ring-gray-950/10 focus:border-gray-950/10"
             />
             {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
           </div>
@@ -60,7 +60,7 @@ const RegisterPage = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
+              className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-nonefocus:ring-gray-950/10 focus:border-gray-950/10"
             />
           </div>
           <div>
@@ -72,21 +72,27 @@ const RegisterPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
+              className="w-full px-4 py-2 mt-1 mb-6 border rounded-lg focus:outline-nonefocus:ring-gray-950/10 focus:border-gray-950/10"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className={`w-full px-4 py-2 text-white font-medium rounded-lg transition ${
+            className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white/90 transition-all duration-300 ease-in-out ${
               loading
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-500 hover:bg-blue-600"
+                : "bg-gray-950 hover:bg-gray-950/90"
             }`}
           >
             {loading ? "Registering..." : "Register"}
           </button>
         </form>
+        <div className="flex items-center justify-center text-gray-900 gap-1 mt-5">
+          Sudah punya akun?{" "}
+          <span className="font-semibold">
+            <Link to="/login"> Login</Link>
+          </span>
+        </div>
       </div>
     </div>
   );
