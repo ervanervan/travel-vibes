@@ -1,5 +1,5 @@
 const CommentPage = () => {
-  return <div>Commentpage</div>;
+  return <section>Commentpage</section>;
 };
 
 export default CommentPage;
