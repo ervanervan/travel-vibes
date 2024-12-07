@@ -9,12 +9,16 @@ import CommentPage from "./pages/CommentPage";
 import RegisterPage from "./pages/Registerpage";
 import ProfilePage from "./pages/Profilepage";
 import ArticlePage from "./pages/Articlepage";
+import Articlelist from "./pages/Articlelist";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    children: [{ path: "/", element: <HomePage /> }],
+    children: [
+      { path: "/", element: <HomePage /> },
+      { path: "/article-list", element: <Articlelist /> },
+    ],
   },
   { path: "/login", element: <LoginPage /> },
   { path: "/register", element: <RegisterPage /> },
