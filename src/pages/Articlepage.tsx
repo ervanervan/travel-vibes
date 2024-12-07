@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getArticles } from "../services/articlesApi";
 import { Article, PaginationMeta } from "../types";
 
-const Articlepage = () => {
+const ArticlePage = () => {
   const [articles, setArticles] = useState<Article[]>([]); // Tipe array artikel
   const [meta, setMeta] = useState<PaginationMeta | null>(null); // Tipe meta bisa null awalnya
   const [error, setError] = useState<string>(""); // Tipe string untuk error
@@ -62,4 +62,4 @@ const Articlepage = () => {
   );
 };
 
-export default Articlepage;
+export default ArticlePage;

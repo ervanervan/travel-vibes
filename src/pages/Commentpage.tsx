@@ -1,5 +1,5 @@
-const Commentpage = () => {
+const CommentPage = () => {
   return <div>Commentpage</div>;
 };
 
-export default Commentpage;
+export default CommentPage;

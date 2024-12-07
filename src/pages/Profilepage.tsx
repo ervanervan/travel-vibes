@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const Profilepage = () => {
+const ProfilePage = () => {
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -23,4 +23,4 @@ const Profilepage = () => {
   );
 };
 
-export default Profilepage;
+export default ProfilePage;
