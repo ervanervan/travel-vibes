@@ -46,11 +46,11 @@ const ArticleTable: React.FC<ArticleTableProps> = ({ articles }) => {
                   "No Image"
                 )}
               </td>
-              <td className="flex flex-col md:flex-row gap-3 md:gap-0 items-center justify-center px-4 py-2 text-sm text-gray-700">
-                <button className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
+              <td className="flex flex-col md:flex-row gap-2 items-center justify-center px-4 py-2 text-sm text-gray-700">
+                <button className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
                   Edit
                 </button>
-                <button className="ml-2 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
+                <button className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
                   Delete
                 </button>
               </td>

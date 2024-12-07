@@ -10,6 +10,7 @@ import RegisterPage from "./pages/Registerpage";
 import ProfilePage from "./pages/Profilepage";
 import ArticlePage from "./pages/Articlepage";
 import Articlelist from "./pages/Articlelist";
+import ArticleDetail from "./pages/ArticleDetail";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ export const router = createBrowserRouter([
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/article-list", element: <Articlelist /> },
+      { path: "/articles/:id", element: <ArticleDetail /> },
     ],
   },
   { path: "/login", element: <LoginPage /> },

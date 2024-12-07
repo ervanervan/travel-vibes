@@ -12,8 +12,16 @@ const ArticleList = () => {
     const fetchArticles = async () => {
       try {
         setLoading(true);
-        const data = await getArticles();
-        setArticles(data); // Simpan data ke state
+        // Cek apakah ada data di localStorage
+        const cachedArticles = localStorage.getItem("articles");
+        if (cachedArticles) {
+          setArticles(JSON.parse(cachedArticles));
+        } else {
+          // Fetch data jika belum ada di localStorage
+          const data = await getArticles();
+          setArticles(data);
+          localStorage.setItem("articles", JSON.stringify(data)); // Simpan ke localStorage
+        }
       } catch (err) {
         setError("Failed to fetch articles");
       } finally {

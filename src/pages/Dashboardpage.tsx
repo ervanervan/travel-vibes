@@ -133,7 +133,7 @@ const DashboardPage = () => {
         className={`flex-1 ${isSidebarOpen ? "md:p-6" : "p-2 md:p-6"}
         `}
       >
-        <header className="bg-white shadow-md p-4 rounded-lg flex items-center justify-between">
+        <header className="sticky top-6 bg-white shadow-md p-4 rounded-lg flex items-center justify-between">
           <h1 className="text-2xl font-semibold text-gray-950">{getTitle()}</h1>
           <div className="relative">
             {/* User Info */}

@@ -14,7 +14,7 @@ export default function Navbar() {
     >
       <div className="container mx-auto">
         <div className="grid grid-cols-2 items-center p-4 md:p-6">
-          <Link to={"/"}>
+          <Link to={"/"} className="w-fit">
             <h1
               className={`font-pacifico text-2xl md:text-3xl ${
                 isHomePage ? "text-white/90" : "text-gray-950"
