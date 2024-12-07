@@ -31,7 +31,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <section className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
         <h1 className="text-3xl font-pacifico mb-2 text-center">
           Travel Vibes
@@ -89,7 +89,7 @@ const LoginPage = () => {
           </span>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

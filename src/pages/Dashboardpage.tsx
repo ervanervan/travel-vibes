@@ -50,7 +50,7 @@ const DashboardPage = () => {
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <section className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
       <aside
         className={`${
@@ -168,7 +168,7 @@ const DashboardPage = () => {
           <Outlet />
         </section>
       </main>
-    </div>
+    </section>
   );
 };
 

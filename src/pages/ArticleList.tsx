@@ -1,5 +1,5 @@
 const Articlelist = () => {
-  return <div>Articlelist</div>;
+  return <section>Articlelist</section>;
 };
 
 export default Articlelist;

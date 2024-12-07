@@ -15,11 +15,11 @@ const ProfilePage = () => {
   }
 
   return (
-    <div>
+    <section>
       <h1>Profile Page</h1>
       <p>Username: {user.username}</p>
       <p>Email: {user.email}</p>
-    </div>
+    </section>
   );
 };
 

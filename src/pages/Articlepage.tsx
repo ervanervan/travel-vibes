@@ -25,7 +25,7 @@ const ArticlePage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
+    <section>
       <h1>Articles</h1>
       <ul>
         {articles.map((article) => (
@@ -58,7 +58,7 @@ const ArticlePage = () => {
           Next
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 

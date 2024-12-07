@@ -33,7 +33,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <section className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
         <h1 className="text-3xl font-pacifico mb-2 text-center">
           Travel Vibes
@@ -96,7 +96,7 @@ const RegisterPage = () => {
           </span>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
