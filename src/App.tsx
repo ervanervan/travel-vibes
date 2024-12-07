@@ -5,7 +5,7 @@ import Footer from "./components/Footer";
 export default function App() {
   return (
     <>
-      <main className="relative">
+      <main className="relative bg-gray-100">
         <Navbar />
         <Outlet />
         <Footer />

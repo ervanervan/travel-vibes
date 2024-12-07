@@ -7,9 +7,7 @@ export default function Navbar() {
   return (
     <header
       className={` ${
-        isHomePage
-          ? "absolute top-4 left-0 w-full z-30 bg-transparent"
-          : "bg-white/90 py-4"
+        isHomePage ? "absolute top-4 left-0 w-full z-30 bg-transparent" : "py-4"
       }`}
     >
       <div className="container mx-auto">

@@ -1,24 +1,29 @@
 import { useNavigate } from "react-router-dom";
 import { Article } from "../types";
 
-const ArticleCard = ({ id, title, description, cover_image_url }: Article) => {
+const ArticleCard = ({
+  documentId,
+  title,
+  //   description,
+  cover_image_url,
+}: Article) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate(`/articles/${id}`);
+    navigate(`/articles/${documentId}`);
   };
 
   return (
-    <div className="bg-white border rounded-lg p-4 transition-shadow duration-300">
+    <div className="bg-white rounded-lg p-4 duration-300">
       <img
         src={cover_image_url}
         alt={title}
-        className="w-full h-40 object-cover rounded-md"
+        className="w-full h-52 object-cover rounded-md"
       />
       <h3 className="mt-4 text-lg font-bold text-gray-800">{title}</h3>
-      <p className="mt-2 text-sm text-gray-600 line-clamp-2">
+      {/* <p className="mt-2 text-sm text-gray-600 line-clamp-2">
         {description || "No description available."}
-      </p>
+      </p> */}
       <button
         onClick={(e) => {
           e.stopPropagation(); // Prevent card click from triggering

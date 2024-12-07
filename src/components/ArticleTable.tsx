@@ -1,6 +1,7 @@
-import { ArticleTableProps } from "../types";
+import { WithArticles } from "../types";
+export interface ArticleTableProps extends WithArticles {}
 
-const ArticleTable: React.FC<ArticleTableProps> = ({ articles }) => {
+const ArticleTable: React.FC<WithArticles> = ({ articles }) => {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white border border-gray-200 table-auto">

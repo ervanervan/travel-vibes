@@ -32,17 +32,24 @@ const Articlelist = () => {
     fetchArticles();
   }, []);
 
-  if (loading) return <p className="text-gray-600">Loading...</p>;
-  if (error) return <p className="text-red-600">Error: {error}</p>;
+  if (loading)
+    return (
+      <div className="text-gray-600 container mx-auto p-6">Loading...</div>
+    );
+  if (error)
+    return (
+      <div className="text-red-600 container mx-auto p-6">Error: {error}</div>
+    );
 
   return (
     <section className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Article List</h1>
+      <h1 className="text-2xl font-semibold text-gray-950 mb-6">All Article</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {articles.map((article) => (
           <ArticleCard
             key={article.id}
             id={article.id}
+            documentId={article.documentId}
             title={article.title}
             description={article.description}
             cover_image_url={article.cover_image_url || ""}
