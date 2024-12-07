@@ -1,65 +1,38 @@
 import { useEffect, useState } from "react";
-import { getArticles } from "../services/articlesApi";
-import { Article, PaginationMeta } from "../types";
+import { getArticles } from "../services/articlesService";
+import { Article } from "../types";
+import ArticleTable from "../components/ArticleTable";
 
-const ArticlePage = () => {
-  const [articles, setArticles] = useState<Article[]>([]); // Tipe array artikel
-  const [meta, setMeta] = useState<PaginationMeta | null>(null); // Tipe meta bisa null awalnya
-  const [error, setError] = useState<string>(""); // Tipe string untuk error
-  const [page, setPage] = useState<number>(1); // Tipe number untuk pagination
+const ArticleList = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const { articles, meta } = await getArticles(page);
-        setArticles(articles);
-        setMeta(meta);
+        setLoading(true);
+        const data = await getArticles();
+        setArticles(data); // Simpan data ke state
       } catch (err) {
-        setError("Failed to fetch articles.");
+        setError("Failed to fetch articles");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchArticles();
-  }, [page]);
+  }, []);
 
-  if (error) return <p>{error}</p>;
+  if (loading) return <div className="p-4">Loading...</div>;
+  if (error) return <div className="p-4">Error: {error}</div>;
 
   return (
-    <section>
-      <h1>Articles</h1>
-      <ul>
-        {articles.map((article) => (
-          <li key={article.id}>
-            <h3>{article.title || "Untitled"}</h3>
-            <p>{article.description || "No description"}</p>
-            <img
-              src={article.cover_image_url}
-              alt={article.title || "Cover"}
-              width={100}
-            />
-          </li>
-        ))}
-      </ul>
-      <div>
-        <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-          disabled={page === 1}
-        >
-          Previous
-        </button>
-        <button
-          onClick={() =>
-            setPage((prev) =>
-              meta?.pageCount && prev < meta.pageCount ? prev + 1 : prev
-            )
-          }
-          disabled={page === meta?.pageCount}
-        >
-          Next
-        </button>
-      </div>
-    </section>
+    <div className="p-4 md:p-0">
+      <h1 className="text-2xl mb-4">Article List</h1>
+      <ArticleTable articles={articles} />
+    </div>
   );
 };
 
-export default ArticlePage;
+export default ArticleList;

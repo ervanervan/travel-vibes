@@ -12,6 +12,7 @@ import {
 const DashboardPage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const DashboardPage = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     setUsername(user.username || "Guest");
+    setEmail(user.email || "No Email");
   }, []);
 
   const handleLogout = () => {
@@ -55,61 +57,64 @@ const DashboardPage = () => {
       <aside
         className={`${
           isSidebarOpen ? "w-64" : "w-16"
-        } relative bg-gray-950 text-white/90 transition-all duration-300 hidden md:block`}
+        } sticky top-0 h-screen bg-gray-950 text-white/90 transition-all duration-300 hidden md:block`}
       >
-        <div
-          className={`p-4 mt-4 flex items-center ${
-            isSidebarOpen ? "justify-between" : "justify-center"
-          }`}
-        >
-          <Link to="/dashboard">
-            <h2
-              className={`text-2xl font-pacifico ${
-                isSidebarOpen ? "block text-left" : "text-center hidden"
-              }`}
-            >
-              Travel Vibes
-            </h2>
-          </Link>
-          <button
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className={`focus:outline-none ${
-              isSidebarOpen ? "" : "absolute right-5 mt-4"
+        <div>
+          <div
+            className={`p-4 mt-4 flex items-center ${
+              isSidebarOpen ? "justify-between" : "justify-center"
             }`}
           >
-            {isSidebarOpen ? <NavArrowLeft /> : <NavArrowRight />}
-          </button>
+            <Link to="/dashboard">
+              <h2
+                className={`text-2xl font-pacifico ${
+                  isSidebarOpen ? "block text-left" : "text-center hidden"
+                }`}
+              >
+                Travel Vibes
+              </h2>
+            </Link>
+            <button
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className={`focus:outline-none ${
+                isSidebarOpen ? "" : "absolute right-5 mt-4"
+              }`}
+            >
+              {isSidebarOpen ? <NavArrowLeft /> : <NavArrowRight />}
+            </button>
+          </div>
+
+          <nav className="mt-4 space-y-4 p-2">
+            <Link
+              to="/dashboard/articles"
+              className={`flex items-center ${
+                isSidebarOpen ? "" : "justify-center"
+              } p-2.5 hover:bg-gray-900 rounded-lg`}
+            >
+              <Book width={20} />
+              {isSidebarOpen && <span className="ml-4">Articles</span>}
+            </Link>
+            <Link
+              to="/dashboard/categories"
+              className={`flex items-center ${
+                isSidebarOpen ? "" : "justify-center"
+              } p-2.5 hover:bg-gray-900 rounded-lg`}
+            >
+              <Folder width={20} />
+              {isSidebarOpen && <span className="ml-4">Categories</span>}
+            </Link>
+            <Link
+              to="/dashboard/comments"
+              className={`flex items-center ${
+                isSidebarOpen ? "" : "justify-center"
+              } p-2.5 hover:bg-gray-900 rounded-lg`}
+            >
+              <Message width={20} />
+              {isSidebarOpen && <span className="ml-4">Comments</span>}
+            </Link>
+          </nav>
         </div>
 
-        <nav className="mt-4 space-y-4 p-2">
-          <Link
-            to="/dashboard/articles"
-            className={`flex items-center ${
-              isSidebarOpen ? "" : "justify-center"
-            } p-2.5 hover:bg-gray-900 rounded-lg`}
-          >
-            <Book width={20} />
-            {isSidebarOpen && <span className="ml-4">Articles</span>}
-          </Link>
-          <Link
-            to="/dashboard/categories"
-            className={`flex items-center ${
-              isSidebarOpen ? "" : "justify-center"
-            } p-2.5 hover:bg-gray-900 rounded-lg`}
-          >
-            <Folder width={20} />
-            {isSidebarOpen && <span className="ml-4">Categories</span>}
-          </Link>
-          <Link
-            to="/dashboard/comments"
-            className={`flex items-center ${
-              isSidebarOpen ? "" : "justify-center"
-            } p-2.5 hover:bg-gray-900 rounded-lg`}
-          >
-            <Message width={20} />
-            {isSidebarOpen && <span className="ml-4">Comments</span>}
-          </Link>
-        </nav>
         <div className="absolute bottom-4 p-2 w-full">
           <button
             onClick={handleLogout}
@@ -149,6 +154,7 @@ const DashboardPage = () => {
               <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg border border-gray-200 z-10">
                 <div className="p-4">
                   <p className="text-gray-800 font-medium">Hi, {username}</p>
+                  <p className="text-gray-600 text-sm">{email}</p>
                 </div>
                 <hr />
                 <button
