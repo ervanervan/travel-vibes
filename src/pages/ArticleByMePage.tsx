@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import {
-  fetchArticles,
+  fetchArticlesByUser,
   selectArticles,
 } from "../store/features/articles/articleSlice";
-import ArticleTable from "../components/ArticleTable";
+import ArticleTableByMe from "../components/ArticleTableByMe";
+import { Link } from "react-router-dom";
 
-const ArticlesList: React.FC = () => {
+const ArticlesListByMePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { articles, loading, error } = useAppSelector(selectArticles);
 
@@ -39,7 +40,7 @@ const ArticlesList: React.FC = () => {
   // Fetch articles when filters, pagination, or debounced values change
   useEffect(() => {
     dispatch(
-      fetchArticles({
+      fetchArticlesByUser({
         page,
         pageSize,
         filters: {
@@ -61,8 +62,10 @@ const ArticlesList: React.FC = () => {
 
   return (
     <div>
-      <h1>Articles List</h1>
-
+      <div className="flex items-center justify-between">
+        <h1>Articles List</h1>
+        <Link to={"add-data"}>Add data</Link>
+      </div>
       {/* Filters */}
       <div className="filters">
         <input
@@ -90,7 +93,7 @@ const ArticlesList: React.FC = () => {
         </select>
       </div>
 
-      <ArticleTable articles={articles} />
+      <ArticleTableByMe articles={articles} />
 
       {/* Pagination */}
       <div className="pagination mt-4">
@@ -113,4 +116,4 @@ const ArticlesList: React.FC = () => {
   );
 };
 
-export default ArticlesList;
+export default ArticlesListByMePage;

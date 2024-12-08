@@ -8,7 +8,7 @@ export interface CardDetailProps extends WithArticle {}
 const CardDetail: React.FC<WithArticle> = ({ article }) => {
   const navigate = useNavigate();
   return (
-    <div className="bg-white rounded-lg overflow-hidden max-w-4xl mx-auto my-10 relative">
+    <div className="bg-white rounded-lg overflow-hidden max-w-4xl mx-auto my-10 relative shadow-lg">
       {/* Tombol Kembali */}
       <button
         onClick={() => navigate("/article-list")}
@@ -18,6 +18,7 @@ const CardDetail: React.FC<WithArticle> = ({ article }) => {
         <span className="text-sm font-medium">Back to Articles</span>
       </button>
 
+      {/* Gambar Sampul */}
       <div className="h-96">
         <img
           src={article.cover_image_url}
@@ -25,6 +26,8 @@ const CardDetail: React.FC<WithArticle> = ({ article }) => {
           className="w-full h-full object-cover"
         />
       </div>
+
+      {/* Detail Artikel */}
       <div className="p-4 md:p-6">
         <h1 className="text-2xl md:text-4xl font-bold text-gray-950 mb-4">
           {article.title}
@@ -32,6 +35,72 @@ const CardDetail: React.FC<WithArticle> = ({ article }) => {
         <p className="text-gray-950/70 text-lg leading-relaxed mb-6">
           {article.description}
         </p>
+
+        {/* Informasi Penulis */}
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold text-gray-950">Author</h2>
+          <p className="text-gray-700">
+            <strong>Name:</strong> {article.user?.username}
+            {console.log(article)}
+          </p>
+          <p className="text-gray-700">
+            <strong>Email:</strong> {article.user?.email}
+          </p>
+        </div>
+
+        {/* Informasi Kategori */}
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold text-gray-950">Category</h2>
+          <p className="text-gray-700">
+            <strong>Category Name:</strong> {article.category?.name}
+          </p>
+          <p className="text-gray-700">
+            <strong>Description:</strong>{" "}
+            {article.category?.description || "No description"}
+          </p>
+        </div>
+
+        {/* Komentar */}
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold text-gray-950 mb-4">
+            Comments ({article.comments?.length})
+          </h2>
+          {article.comments?.length > 0 ? (
+            <ul className="space-y-4">
+              {article.comments?.map((comment: any) => (
+                <li
+                  key={comment?.id}
+                  className="p-4 bg-gray-100 rounded-lg shadow-md"
+                >
+                  <p className="text-gray-800">{comment?.content}</p>
+                  <p className="text-gray-500 text-sm mt-2">
+                    <strong>Created At:</strong>{" "}
+                    {new Date(comment?.createdAt).toLocaleString()}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-gray-700">No comments available.</p>
+          )}
+        </div>
+
+        {/* Metadata */}
+        <div className="mt-6">
+          <h2 className="text-lg font-semibold text-gray-950">Metadata</h2>
+          <p className="text-gray-700">
+            <strong>Created At:</strong>{" "}
+            {new Date(article.createdAt).toLocaleString()}
+          </p>
+          <p className="text-gray-700">
+            <strong>Published At:</strong>{" "}
+            {new Date(article.publishedAt).toLocaleString()}
+          </p>
+          <p className="text-gray-700">
+            <strong>Updated At:</strong>{" "}
+            {new Date(article.updatedAt).toLocaleString()}
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
-import { createBrowserRouter } from "react-router-dom";
+import React, { ReactElement } from "react";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "./App";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -11,7 +12,26 @@ import ProfilePage from "./pages/Profilepage";
 import ArticlePage from "./pages/Articlepage";
 import Articlelist from "./pages/Articlelist";
 import ArticleDetail from "./pages/ArticleDetail";
+import ArticlesListByMePage from "./pages/ArticleByMePage";
+import AddDataArticlePage from "./pages/AddDataArticlePage";
 
+// Define types for props
+interface RouteProps {
+  element: ReactElement;
+}
+
+// Komponen untuk mengecek autentikasi
+const AuthenticatedRoute: React.FC<RouteProps> = ({ element }) => {
+  const token = localStorage.getItem("token");
+  return token ? element : <Navigate to="/login" replace />;
+};
+
+const UnauthenticatedRoute: React.FC<RouteProps> = ({ element }) => {
+  const token = localStorage.getItem("token");
+  return token ? <Navigate to="/dashboard" replace /> : element;
+};
+
+// Router configuration
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -22,17 +42,43 @@ export const router = createBrowserRouter([
       { path: "/articles/:id", element: <ArticleDetail /> },
     ],
   },
-  { path: "/login", element: <LoginPage /> },
-  { path: "/register", element: <RegisterPage /> },
-  { path: "/profile", element: <ProfilePage /> },
+  {
+    path: "/login",
+    element: <UnauthenticatedRoute element={<LoginPage />} />,
+  },
+  {
+    path: "/register",
+    element: <UnauthenticatedRoute element={<RegisterPage />} />,
+  },
+  {
+    path: "/profile",
+    element: <AuthenticatedRoute element={<ProfilePage />} />,
+  },
   {
     path: "/dashboard",
-    element: <DashboardPage />,
+    element: <AuthenticatedRoute element={<DashboardPage />} />,
     children: [
       { index: true, element: <DashboardHome /> },
-      { path: "articles", element: <ArticlePage /> },
-      { path: "categories", element: <CategoryPage /> },
-      { path: "comments", element: <CommentPage /> },
+      {
+        path: "articles",
+        element: <AuthenticatedRoute element={<ArticlePage />} />,
+      },
+      {
+        path: "articles-user",
+        element: <AuthenticatedRoute element={<ArticlesListByMePage />} />,
+      },
+      {
+        path: "articles-me/add-data",
+        element: <AuthenticatedRoute element={<AddDataArticlePage />} />,
+      },
+      {
+        path: "categories",
+        element: <AuthenticatedRoute element={<CategoryPage />} />,
+      },
+      {
+        path: "comments",
+        element: <AuthenticatedRoute element={<CommentPage />} />,
+      },
     ],
   },
 ]);

@@ -7,6 +7,7 @@ import {
   Message,
   Folder,
   Book,
+  BookStack,
 } from "iconoir-react";
 
 const DashboardPage = () => {
@@ -93,6 +94,15 @@ const DashboardPage = () => {
             >
               <Book width={20} />
               {isSidebarOpen && <span className="ml-4">Articles</span>}
+            </Link>
+            <Link
+              to="/dashboard/articles-user"
+              className={`flex items-center ${
+                isSidebarOpen ? "" : "justify-center"
+              } p-2.5 hover:bg-gray-900 rounded-lg`}
+            >
+              <BookStack width={20} />
+              {isSidebarOpen && <span className="ml-4">Articles By User</span>}
             </Link>
             <Link
               to="/dashboard/categories"

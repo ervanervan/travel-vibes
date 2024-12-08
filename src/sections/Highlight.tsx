@@ -9,7 +9,7 @@ export default function Highlight() {
             <div className="text-yellow-500 text-6xl mb-4">
               <Book width={60} />
             </div>
-            <h3 className="text-3xl font-bold text-gray-800">10,000+</h3>
+            <h3 className="teJxt-3xl font-bold text-gray-800">10,000+</h3>
             <p className="text-gray-600">Articles</p>
           </div>
 

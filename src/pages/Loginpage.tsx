@@ -1,32 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../services/authService";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { loginUser, selectAuth } from "../store/features/auth/authSlice";
 
 const LoginPage = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { loading, error } = useAppSelector(selectAuth);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    try {
-      const data = await loginUser(identifier, password);
-
-      // Simpan token dan user di localStorage
-      localStorage.setItem("token", data.jwt);
-      localStorage.setItem("user", JSON.stringify(data.user));
-
-      // Redirect ke halaman lain setelah login sukses
+    const result = await dispatch(loginUser({ identifier, password }));
+    if (loginUser.fulfilled.match(result)) {
       navigate("/dashboard");
-    } catch (err: any) {
-      setError(err || "Failed to login. Please try again.");
-    } finally {
-      setLoading(false);
     }
   };
 

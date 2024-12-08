@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { WithArticles } from "../types";
 export interface ArticleTableProps extends WithArticles {}
 
-const ArticleTable: React.FC<WithArticles> = ({ articles }) => {
+const ArticleTableByMe: React.FC<WithArticles> = ({ articles }) => {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white border border-gray-200 table-auto">
@@ -65,8 +65,11 @@ const ArticleTable: React.FC<WithArticles> = ({ articles }) => {
                   to={`/articles/${article.documentId}`}
                   className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 >
-                  Details
+                  Edit
                 </Link>
+                <button className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
@@ -76,4 +79,4 @@ const ArticleTable: React.FC<WithArticles> = ({ articles }) => {
   );
 };
 
-export default ArticleTable;
+export default ArticleTableByMe;

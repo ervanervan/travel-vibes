@@ -1,54 +1,29 @@
-import { useEffect, useState } from "react";
-import { Article } from "../types";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getArticleById } from "../services/articlesService";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import {
+  fetchArticleById,
+  selectArticles,
+} from "../store/features/articles/articleSlice";
 import CardDetail from "../components/ArticleDetailCard";
 
 const ArticleDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const [article, setArticle] = useState<Article | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const {
+    currentArticle: article,
+    loading,
+    error,
+  } = useAppSelector(selectArticles);
 
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const fetchArticle = async () => {
-      if (!id) {
-        setError("Article ID is missing.");
-        setLoading(false);
-        return;
-      }
+    if (!id) return; // Jangan fetch jika tidak ada ID
 
-      if (!token) {
-        setError("No authentication token found");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        setLoading(true);
-        setError(null);
-
-        const cachedArticle = localStorage.getItem(`article-${id}`);
-        if (cachedArticle) {
-          setArticle(JSON.parse(cachedArticle));
-          setLoading(false);
-          return;
-        }
-
-        const data = await getArticleById(id, token);
-        setArticle(data);
-        localStorage.setItem(`article-${id}`, JSON.stringify(data));
-      } catch (err: any) {
-        setError(err.message || "Something went wrong.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchArticle();
-  }, [id, token]);
+    // Dispatch fetchArticleById
+    dispatch(fetchArticleById({ id, token: token || "" }));
+  }, [id, token, dispatch]);
 
   if (loading)
     return (

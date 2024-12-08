@@ -1,34 +1,21 @@
-import { useState } from "react";
-import { getUserData, registerUser } from "../services/authService";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { registerUser, selectAuth } from "../store/features/auth/authSlice";
 
-const RegisterPage = () => {
+const RegisterPage: React.FC = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const dispatch = useAppDispatch();
+  const { loading, error } = useAppSelector(selectAuth);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
-    try {
-      const data = await registerUser(email, username, password);
-      console.log("Registered user data:", data);
-
-      // Ambil token dari response
-      const token = data.jwt;
-
-      // Fetch data pengguna menggunakan token
-      const userData = await getUserData(token);
-      console.log("Fetched user data:", userData);
-
-      alert(`Welcome ${userData.username}! Your email is ${userData.email}`);
-    } catch (err) {
-      setError("Failed to register. Please try again.");
-    } finally {
-      setLoading(false);
+    const result = await dispatch(registerUser({ email, username, password }));
+    if (registerUser.fulfilled.match(result)) {
+      navigate("/login");
     }
   };
 
