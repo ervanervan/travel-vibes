@@ -60,11 +60,18 @@ const uploadSlice = createSlice({
       })
       .addCase(
         uploadFileThunk.fulfilled,
-        (state, action: PayloadAction<any[]>) => {
+        (
+          state,
+          action: PayloadAction<
+            { id: string; url: string; name: string; size: number }[]
+          >
+        ) => {
           state.uploading = false;
           state.success = true;
           state.uploadedFiles = action.payload;
-          state.uploadedUrl = action.payload;
+          // Ambil URL file pertama jika ada, sebagai nilai untuk uploadedUrl
+          state.uploadedUrl =
+            action.payload.length > 0 ? action.payload[0].url : null;
         }
       )
       .addCase(

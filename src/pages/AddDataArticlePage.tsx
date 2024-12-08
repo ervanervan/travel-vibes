@@ -10,6 +10,8 @@ import {
   fetchCategories,
   selectCategories,
 } from "../store/features/category/categoriesSlice";
+import { Link } from "react-router-dom";
+import { ArrowLeftCircle } from "iconoir-react";
 
 const AddDataArticlePage = () => {
   const dispatch = useAppDispatch();
@@ -30,7 +32,6 @@ const AddDataArticlePage = () => {
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch categories when the component mounts
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
@@ -38,13 +39,9 @@ const AddDataArticlePage = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
-      dispatch(resetUploadState()); // Reset upload state if a new file is selected
+      dispatch(resetUploadState());
     }
   };
-
-  useEffect(() => {
-    console.log(uploadedUrl);
-  }, [uploadedUrl]);
 
   const handleUpload = () => {
     if (!file) {
@@ -63,16 +60,19 @@ const AddDataArticlePage = () => {
       return;
     }
 
+    const articleData = {
+      title,
+      description,
+      category,
+      cover_image_url: uploadedUrl,
+    };
+
+    console.log("Submitting Article Data:", articleData);
+
     try {
-      // Dispatch addArticle
       dispatch(
         addArticle({
-          article: {
-            title,
-            description,
-            category,
-            cover_image_url: uploadedUrl,
-          },
+          article: articleData,
           token: localStorage.getItem("token") || "",
         })
       );
@@ -88,15 +88,29 @@ const AddDataArticlePage = () => {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
-      <div className="bg-white shadow-md rounded-lg p-6 max-w-lg w-full">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-          Add New Article
-        </h1>
+  useEffect(() => {
+    if (uploadedUrl) {
+      console.log("Uploaded URL:", uploadedUrl);
+    }
+  }, [uploadedUrl]);
 
+  return (
+    <div className="bg-gray-100 flex items-center justify-center px-4">
+      <div className="bg-white shadow-md rounded-lg p-6 max-w-lg w-full">
+        <div className="flex items-center justify-between mb-6">
+          <Link
+            to={"/dashboard/articles-user"}
+            className="flex items-center gap-1"
+          >
+            <ArrowLeftCircle />
+            <span>Back</span>
+          </Link>
+          <h1 className="text-2xl font-bold text-gray-900 text-center">
+            Add New Article
+          </h1>
+          <div></div>
+        </div>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Title */}
           <div>
             <label
               htmlFor="title"
@@ -115,7 +129,6 @@ const AddDataArticlePage = () => {
             />
           </div>
 
-          {/* Description */}
           <div>
             <label
               htmlFor="description"
@@ -134,7 +147,6 @@ const AddDataArticlePage = () => {
             />
           </div>
 
-          {/* Category */}
           <div>
             <label
               htmlFor="category"
@@ -166,7 +178,6 @@ const AddDataArticlePage = () => {
             )}
           </div>
 
-          {/* File Upload */}
           <div>
             <label
               htmlFor="file"
@@ -196,8 +207,8 @@ const AddDataArticlePage = () => {
           </div>
 
           {uploadError && <p className="text-red-500 text-sm">{uploadError}</p>}
+          {error && <p className="text-red-500 text-sm">{error}</p>}
 
-          {/* Submit Button */}
           <button
             type="submit"
             disabled={uploading || !uploadedUrl}

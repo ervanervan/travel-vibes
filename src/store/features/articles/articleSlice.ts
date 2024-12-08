@@ -5,6 +5,7 @@ import {
   getArticleById,
   createArticle,
   getArticlesByUser,
+  updateArticleService,
 } from "../../../services/articlesService";
 import { Article } from "../../../types";
 
@@ -95,6 +96,23 @@ export const addArticle = createAsyncThunk(
   }
 );
 
+// Thunk untuk Update Article
+export const updateArticle = createAsyncThunk(
+  "articles/update",
+  async (
+    { id, article, token }: { id: string; article: Article; token: string },
+    thunkAPI
+  ) => {
+    try {
+      // Panggil service untuk memperbarui artikel
+      const updatedArticle = await updateArticleService(id, article, token);
+      return updatedArticle;
+    } catch (error) {
+      return thunkAPI.rejectWithValue("Failed to update article");
+    }
+  }
+);
+
 // Slice untuk Articles
 const articlesSlice = createSlice({
   name: "articles",
@@ -166,6 +184,29 @@ const articlesSlice = createSlice({
         }
       )
       .addCase(addArticle.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+
+      // Update Article
+      .addCase(updateArticle.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        updateArticle.fulfilled,
+        (state, action: PayloadAction<Article>) => {
+          state.loading = false;
+          // Cari artikel berdasarkan ID dan perbarui
+          const index = state.articles.findIndex(
+            (article) => article.id === action.payload.id
+          );
+          if (index !== -1) {
+            state.articles[index] = action.payload;
+          }
+        }
+      )
+      .addCase(updateArticle.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

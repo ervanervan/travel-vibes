@@ -90,15 +90,21 @@ const CardDetail: React.FC<WithArticle> = ({ article }) => {
           <h2 className="text-lg font-semibold text-gray-950">Metadata</h2>
           <p className="text-gray-700">
             <strong>Created At:</strong>{" "}
-            {new Date(article.createdAt).toLocaleString()}
+            {article.createdAt
+              ? new Date(article.createdAt).toLocaleString()
+              : "N/A"}
           </p>
           <p className="text-gray-700">
             <strong>Published At:</strong>{" "}
-            {new Date(article.publishedAt).toLocaleString()}
+            {article.publishedAt
+              ? new Date(article.publishedAt).toLocaleString()
+              : "N/A"}
           </p>
           <p className="text-gray-700">
             <strong>Updated At:</strong>{" "}
-            {new Date(article.updatedAt).toLocaleString()}
+            {article.updatedAt
+              ? new Date(article.updatedAt).toLocaleString()
+              : "N/A"}
           </p>
         </div>
       </div>

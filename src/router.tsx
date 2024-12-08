@@ -14,6 +14,7 @@ import Articlelist from "./pages/Articlelist";
 import ArticleDetail from "./pages/ArticleDetail";
 import ArticlesListByMePage from "./pages/ArticleByMePage";
 import AddDataArticlePage from "./pages/AddDataArticlePage";
+import EditDataArticlePage from "./pages/EditDataArticlePage";
 
 // Define types for props
 interface RouteProps {
@@ -68,8 +69,12 @@ export const router = createBrowserRouter([
         element: <AuthenticatedRoute element={<ArticlesListByMePage />} />,
       },
       {
-        path: "articles-me/add-data",
+        path: "articles-user/add-data",
         element: <AuthenticatedRoute element={<AddDataArticlePage />} />,
+      },
+      {
+        path: "articles-user/edit-data/:id",
+        element: <AuthenticatedRoute element={<EditDataArticlePage />} />,
       },
       {
         path: "categories",

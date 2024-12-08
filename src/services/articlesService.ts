@@ -125,6 +125,38 @@ export const getArticleById = async (
   }
 };
 
+// Update an article by ID
+export const updateArticleService = async (
+  id: string,
+  article: Article,
+  token: string // Token untuk autentikasi
+): Promise<Article> => {
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/articles/${id}?populate=*`,
+      {
+        title: article.title,
+        description: article.description,
+        cover_image_url: article.cover_image_url,
+        category: article.category,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Sertakan token dalam header
+        },
+      }
+    );
+    return response.data.data; // Ambil data dari properti "data"
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error updating article:", error.response?.data);
+      throw new Error(error.response?.data.message || "Error updating article");
+    } else {
+      throw new Error("Unknown error");
+    }
+  }
+};
+
 // Create a new article
 export const createArticle = async (
   article: Article,
