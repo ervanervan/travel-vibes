@@ -10,11 +10,11 @@ import CommentPage from "./pages/CommentPage";
 import RegisterPage from "./pages/Registerpage";
 import ProfilePage from "./pages/Profilepage";
 import ArticlePage from "./pages/Articlepage";
-import Articlelist from "./pages/Articlelist";
-import ArticleDetail from "./pages/ArticleDetail";
 import ArticlesListByMePage from "./pages/ArticleByMePage";
 import AddDataArticlePage from "./pages/AddDataArticlePage";
 import EditDataArticlePage from "./pages/EditDataArticlePage";
+import ArticleListPage from "./pages/ArticleListPage";
+import ArticleDetailPage from "./pages/ArticleDetailPage";
 
 // Define types for props
 interface RouteProps {
@@ -39,8 +39,8 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/", element: <HomePage /> },
-      { path: "/article-list", element: <Articlelist /> },
-      { path: "/articles/:id", element: <ArticleDetail /> },
+      { path: "/article-list", element: <ArticleListPage /> },
+      { path: "/articles/:id", element: <ArticleDetailPage /> },
     ],
   },
   {

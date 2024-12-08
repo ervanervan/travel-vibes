@@ -3,7 +3,7 @@ import { Article } from "../types";
 import ArticleCard from "../components/ArticleCard";
 import { getArticles } from "../services/articlesService";
 
-const Articlelist = () => {
+const ArticleListPage = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -60,4 +60,4 @@ const Articlelist = () => {
   );
 };
 
-export default Articlelist;
+export default ArticleListPage;

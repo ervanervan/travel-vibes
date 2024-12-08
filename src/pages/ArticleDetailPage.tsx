@@ -7,7 +7,7 @@ import {
 } from "../store/features/articles/articleSlice";
 import CardDetail from "../components/ArticleDetailCard";
 
-const ArticleDetail = () => {
+const ArticleDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
   const {
@@ -43,4 +43,4 @@ const ArticleDetail = () => {
   return <CardDetail article={article} />;
 };
 
-export default ArticleDetail;
+export default ArticleDetailPage;
